@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/main.css" />
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+        <script src="/js/main.js" charset="utf-8"></script>
+
+        <title>CHAT !!!</title>
+
+    </head>
+
+    <body>
+        <nav class="navbar navbar-light bg-warning">
+            <a class="navbar-brand mx-auto" href="/">Chat en Node.js a full !!!</a>
+        </nav>
+
+        <div id="nickWrap" class="card col-md-4 mt-5 mx-auto">
+            <p id="nickError"></p>
+            <div class="card-header">
+                <h3>Enter your username:</h3>
+            </div>
+            <div class="card-body ">
+                <form id="nickForm">
+                    <input type="text" id="nickName" class="form-control">
+                    <button type="submit" class="btn btn-warning mt-2">
+                        <i class="fas fa-location-arrow"></i> Send
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="container" id="contentWrap">
+            <div class="row mt-4">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Users</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="usernames"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <g4>Let's Chat</g4>
+                        </div>
+                        <div id="chat" class="card-body"></div>
+                        <form id="message-form" class="card-footer">
+                            <div class="input-group">
+                                <input type="text" id="message" class="form-control">
+                                <div class="input-group-append">
+                                    <button type="submit">
+                                        <i class="fas fa-location-arrow"></i> Send
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+</html>
