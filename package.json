@@ -6,14 +6,13 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "comp": "pkg --config package.json src/index.js -o Chat"
+    "comp": "pkg --config package.json src/index.js -o exe/Chat"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "g": "^2.0.1",
     "socket.io": "^2.2.0",
     "nodemon": "^1.18.9"
   },
