@@ -1,10 +1,12 @@
 {
-  "name": "Chat",
+  "name": "chat",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "comp": "pkg --config package.json src/index.js -o Chat"
   },
   "keywords": [],
   "author": "",
@@ -12,9 +14,12 @@
   "dependencies": {
     "express": "^4.16.4",
     "g": "^2.0.1",
-    "socket.io": "^2.2.0"
-  },
-  "devDependencies": {
+    "socket.io": "^2.2.0",
     "nodemon": "^1.18.9"
+  },
+  "pkg": {
+    "scripts": ["/src/public/js/**/*.js"],
+    "assets": ["/src/public/**/*.html", "/src/public/css/**/*.css"],
+    "targets": ["node10"]
   }
 }

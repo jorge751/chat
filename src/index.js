@@ -10,8 +10,9 @@ const io = socketio.listen(server);             // protocolo de conexión en tie
 app.set('port', process.env.PORT || 3000);      // establece puerto
 require('./sockets')(io);                       // Inicializa protocolo de tiempo real
 
-app.use(express.static(path.join(__dirname, 'public')));        // Envía archios estáticos al cliente
+app.use(express.static(path.join(__dirname, 'public')));  // Envía archios estáticos al cliente
 
 server.listen(app.get('port'), () => {
+    console.log(path.join(__dirname, 'public'));
     console.log('Server on port', app.get('port'), '!!!');      // Lanza servidor
 })
