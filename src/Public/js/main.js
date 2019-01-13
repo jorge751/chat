@@ -1,5 +1,6 @@
 
 $(function () {
+
     // DOM del chat
     const socket = io();
     const $messageForm = $('#message-form')
@@ -16,6 +17,10 @@ $(function () {
 
     $nickForm.submit (e => {
         e.preventDefault();
+        if ($nickName.val() == "") {
+            $nickError.html('<b>Enter username.</b><br/>');
+            return;
+        }
         socket.emit('new user', $nickName.val(),  data => {
             if (data) {
                 $('#nickWrap').hide();
@@ -29,19 +34,25 @@ $(function () {
 
     $messageForm.submit( e => {
         e.preventDefault();
-        socket.emit('send message', $messageBox.val());
+        socket.emit('send message', $messageBox.val(), data => {
+            $chat.append('<p class="error"> '+data+' </p>')
+        });
         $messageBox.val('');
     });
-    socket.on('new message', function (data) {
-        $chat.append('<b>' + data.nick + '</b>: ' + data.msg + '<br/>');
+    
+    socket.on('new message', data => {
+        $chat.append('<p><b>' + data.timeMsg + ' : '  + data.nick + ' : </b> ' + data.msg + '<br/></p>');
     });
 
-    socket.on('usernames', function (data)  {
+    socket.on('usernames', data =>  {
         let html = '';
         for (let i = 0; i < data.length; i++) {
             html += '<p> <i class="fas fa-user">' + data[i] + '</p>';
         }
         $users.html(html);
     });
-});
 
+    socket.on('whisper', data => {
+        $chat.append('<p class="whisper"><b>' + data.timeMsg + ' : '  + data.nick + ' : </b> ' + data.msg + '<br/></p>');
+    })
+});

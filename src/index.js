@@ -13,6 +13,5 @@ require('./sockets')(io);                       // Inicializa protocolo de tiemp
 app.use(express.static(path.join(__dirname, 'public')));  // Envía archios estáticos al cliente
 
 server.listen(app.get('port'), () => {
-    console.log(path.join(__dirname, 'public'));
     console.log('Server on port', app.get('port'), '!!!');      // Lanza servidor
 })
