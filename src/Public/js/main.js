@@ -21,14 +21,15 @@ $(function () {
             $nickError.html('<b>Enter username.</b><br/>');
             return;
         }
-        socket.emit('new user', $nickName.val(),  data => {
-            if (data) {
+        socket.emit('new user', $nickName.val(),  result => {
+            if (result) {
                 $('#nickWrap').hide();
+                $chat.html('');
+                $('#session').html('<h3> Sesión de '+$nickName.val()+'</h3>');
                 $('#contentWrap').show();
             } else {
                 $('#nickError').html('<div class="alert alert-danger">That username already exists.</div>');
             };
-            $nickName.val('');
         });
     });
 
@@ -41,18 +42,28 @@ $(function () {
     });
     
     socket.on('new message', data => {
-        $chat.append('<p><b>' + data.timeMsg + ' : '  + data.nick + ' : </b> ' + data.msg + '<br/></p>');
+        displayMsg(data);
     });
 
     socket.on('usernames', data =>  {
         let html = '';
-        for (let i = 0; i < data.length; i++) {
-            html += '<p> <i class="fas fa-user">' + data[i] + '</p>';
+        for (let x = 0; x < data.length; x++) {
+            html += '<p> <i class="fas fa-user">  ' + data[x] + '</p>';
         }
         $users.html(html);
     });
 
     socket.on('whisper', data => {
         $chat.append('<p class="whisper"><b>' + data.timeMsg + ' : '  + data.nick + ' : </b> ' + data.msg + '<br/></p>');
-    })
+    });
+
+    socket.on('load old msgs', msgs => {
+        for (let i = 0; i < msgs.length; i++) {
+            displayMsg(msgs[i]);
+        }
+    });
+
+    function displayMsg(data) {
+        $chat.append('<p><b>' + data.timeMsg + ' : '  + data.nick + ' : </b> ' + data.msg + '<br/></p>');
+    }
 });

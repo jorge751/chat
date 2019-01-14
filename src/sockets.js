@@ -1,5 +1,8 @@
 
 const moment = require('moment');
+const Db = require('tingodb')().Db;
+const db = new Db('', {});
+var collection = db.collection('ippi_messages_'+moment().format('YYYY')+'_'+moment().format('MM')+'_'+moment().format('DD')+'.jdb');
 
 module.exports = function (io) {
 
@@ -7,6 +10,7 @@ module.exports = function (io) {
 
     io.on('connection', socket => {
         console.log('New user connected.');
+
         socket.on('new user', (data, cb) => {
             if (data in users) {
                 cb(false);
@@ -15,8 +19,15 @@ module.exports = function (io) {
                 socket.nickName = data;
                 users[socket.nickName] = socket;
                 updateNicknames();
-            }
+            };
+            //
+            collection.find({}).toArray(function(err, msgs) {
+                if (err) throw err;
+                socket.emit('load old msgs', msgs);
+            });
+            //
         });
+
         socket.on('send message', (data,cb) => {
             var msg = data.trim();
             if (msg.substr(0,3) === '/w ') {
@@ -38,18 +49,28 @@ module.exports = function (io) {
                     cb('Error!!! Please enter your message.');
                 };
             } else {
+                const timeMsg = moment().format('HH:mm');
                 io.sockets.emit('new message', {
                     msg: data,
                     nick: socket.nickName,
-                    timeMsg: moment().format('HH:mm')
+                    timeMsg
                 });
+                //  Graba la base
+                collection.insert({
+                    timeCreated: moment().format(''),
+                    timeMsg,
+                    nick: socket.nickName,
+                    msg: data}, {w:1}, (err, result) => {});
+                //
             };
         });
-        socket.on('disconnect', data => {
+
+        socket.on('disconnect', () => {
             if (!socket.nickName) return;
             delete users[socket.nickName];
             updateNicknames();
         });
+
         function updateNicknames () {
             io.sockets.emit('usernames', Object.keys(users));
         };
