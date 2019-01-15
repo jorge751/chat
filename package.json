@@ -24,7 +24,8 @@
     ],
     "assets": [
       "/src/public/**/*.html",
-      "/src/public/css/**/*.css"
+      "/src/public/css/**/*.css",
+      "/src/public/audio/**/*"
     ],
     "targets": [
       "node10"

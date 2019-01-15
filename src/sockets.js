@@ -1,8 +1,16 @@
 
 const moment = require('moment');
 const Db = require('tingodb')().Db;
-const db = new Db('', {});
-var collection = db.collection('ippi_messages_'+moment().format('YYYY')+'_'+moment().format('MM')+'_'+moment().format('DD')+'.jdb');
+
+// Decide si graba o no la DB
+const setDB =  process.argv[2] != undefined
+if (setDB) {
+    const db = new Db('', {});
+    const dbName = process.argv[2].replace(/_/g,' ');
+    var dbColl = dbName + '_messages_'
+    dbColl += moment().format('YYYY_MM_DD') + '.jdb'
+    var collection = db.collection(dbColl);
+};
 
 module.exports = function (io) {
 
@@ -10,6 +18,10 @@ module.exports = function (io) {
 
     io.on('connection', socket => {
         console.log('New user connected.');
+
+        socket.on('titulo', (cb) => {
+            if (setDB) { cb(dbName) } { cb('') };
+        });
 
         socket.on('new user', (data, cb) => {
             if (data in users) {
@@ -20,12 +32,13 @@ module.exports = function (io) {
                 users[socket.nickName] = socket;
                 updateNicknames();
             };
-            //
-            collection.find({}).toArray(function(err, msgs) {
-                if (err) throw err;
-                socket.emit('load old msgs', msgs);
-            });
-            //
+            // Carga mensajes anteriores
+            if (setDB) {
+                collection.find({}).toArray(function(err, msgs) {
+                    if (err) throw err;
+                    socket.emit('load old msgs', msgs);
+                });
+            }
         });
 
         socket.on('send message', (data,cb) => {
@@ -55,13 +68,14 @@ module.exports = function (io) {
                     nick: socket.nickName,
                     timeMsg
                 });
-                //  Graba la base
-                collection.insert({
-                    timeCreated: moment().format(''),
-                    timeMsg,
-                    nick: socket.nickName,
-                    msg: data}, {w:1}, (err, result) => {});
-                //
+                //  Graba el mensaje
+                if (setDB) {
+                    collection.insert({
+                        timeCreated: moment().format(''),
+                        timeMsg,
+                        nick: socket.nickName,
+                        msg: data}, {w:1}, (err, result) => {});
+                };
             };
         });
 

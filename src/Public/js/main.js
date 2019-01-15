@@ -1,11 +1,11 @@
 
 $(function () {
 
-    // DOM del chat
     const socket = io();
-    const $messageForm = $('#message-form')
-    const $messageBox = $('#message')
-    const $chat = $('#chat')
+
+    socket.emit('titulo', org => {
+        $('#titulo').html('Salón de chat de ' + org + ' !!!');
+    });
 
     // DOM del registro de usuario
     const $nickForm = $('#nickForm');
@@ -14,6 +14,14 @@ $(function () {
 
     // DOM lista de usuarios
     const $users = $('#usernames');
+
+    // DOM del chat
+    const $messageForm = $('#message-form');
+    const $messageBox = $('#message');
+    const $chat = $('#chat');
+
+    // Audio
+    const $new_msg_audio = $('#new_msg_audio');
 
     $nickForm.submit (e => {
         e.preventDefault();
@@ -65,5 +73,6 @@ $(function () {
 
     function displayMsg(data) {
         $chat.append('<p><b>' + data.timeMsg + ' : '  + data.nick + ' : </b> ' + data.msg + '<br/></p>');
+        $new_msg_audio.html('<audio autoplay><source src="audio/new_message.wav"/></audio>');
     }
 });

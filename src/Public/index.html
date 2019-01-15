@@ -13,13 +13,13 @@
         <script src="/socket.io/socket.io.js" charset="utf-8"></script>
         <script src="/js/main.js" charset="utf-8"></script>
 
-        <title>CHAT de IPPI!!!</title>
+        <title>Salón de CHAT</title>
 
     </head>
 
     <body>
         <nav class="navbar navbar-light bg-warning">
-            <a class="navbar-brand mx-auto" href="/">Salón de chat de IPPI</a>
+            <a class="navbar-brand mx-auto" id="titulo" href="/">Salón de chat</a>
         </nav>
 
         <div id="nickWrap" class="card col-md-4 mt-5 mx-auto">
@@ -52,7 +52,10 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div id="session" class="card-header"></div>
-                        <div id="chat" style="overflow:scroll; height:400px;" class="card-body"></div>
+                        <div id="chat" style="overflow:scroll; height:350px;" class="card-body"></div>
+
+                        <div id="new_msg_audio"></div>
+
                         <form id="message-form" class="card-footer">
                             <div class="input-group">
                                 <input type="text" id="message" class="form-control">
