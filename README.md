@@ -6,11 +6,17 @@ Chat room server written with Node.js 10, Express, Socket.io, TingoDB and Moment
 <b>npm run dev</b>
 </p>
 
-// Uncompile production:
-npm start
+<p>
+// Uncompile production:<br/>
+<b>npm start</b>
+</p>
 
-// To compile with Pkg:
-npm run comp
+<p>
+// To compile with Pkg:<br/>
+<b>npm run comp</b>
+</p>
 
-// Compile production:
-chat.exe [name_database_root]
+<p>
+// Compile production:<br/>
+<b>chat.exe [name_database_root]</b>
+</p>
