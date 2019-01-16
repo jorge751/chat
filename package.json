@@ -14,9 +14,11 @@
   "dependencies": {
     "express": "^4.16.4",
     "moment": "^2.23.0",
-    "nodemon": "^1.18.9",
     "socket.io": "^2.2.0",
     "tingodb": "^0.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
   },
   "pkg": {
     "scripts": [

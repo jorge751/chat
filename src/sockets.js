@@ -3,10 +3,11 @@ const moment = require('moment');
 const Db = require('tingodb')().Db;
 
 // Decide si graba o no la DB
-const setDB =  process.argv[2] != undefined
+const setDB = (process.argv[2] != undefined);
+var dbName
 if (setDB) {
     const db = new Db('', {});
-    const dbName = process.argv[2].replace(/_/g,' ');
+    dbName = process.argv[2].replace(/_/g,' ');
     var dbColl = dbName + '_messages_'
     dbColl += moment().format('YYYY_MM_DD') + '.jdb'
     var collection = db.collection(dbColl);
